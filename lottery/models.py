@@ -1,10 +1,12 @@
 from django.db import models
 
+from members.models import Member
+
 # Create your models here.
-class Member(models.Model):
-    name = models.CharField(unique=True, max_length=100)
+class Point(models.Model):
+    member = models.ForeignKey(Member, on_delete=models.CASCADE)
     points = models.IntegerField(default=0)
-    group = models.CharField(max_length=100, blank=True)
+    date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.name
+        return self.member.name

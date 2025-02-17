@@ -1,0 +1,26 @@
+<form action="" method="post">
+    <a href="{% url 'lottery:index' %}">Home</a>
+</form>
+<h1>Member: {{ member.name }} ({{ member.group }})</h1>
+<h2>TOTAL POINTS: {{ member.total_points }}</h2>
+
+<form action="{% url 'lottery:add_points' member.id %}" method="post">
+    {% csrf_token %}
+    <label for="addPoints" type="number" value="{{ add_points }}">
+        Add Points:
+    </label>
+    <input id="addPoints" type="number" name="addPoints" value="{{ add_points }}">
+    <input type="submit" value="addPoints">
+</form>
+
+<ol>
+    {% for point in point_list %}
+    <li><h4>Point: {{ point.points }} ---- {{ point.date|date:'m-d'}}</h4></li>
+    {% endfor %}
+</ol>
+
+
+<form action="{% url 'members:delete_member' member.id %}" method="post">
+    {% csrf_token %}
+    <input id="deleteMember" type="submit" name="subtractPoints" value="DELETE MEMBER">
+</form>

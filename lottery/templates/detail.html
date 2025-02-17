@@ -1,0 +1,16 @@
+<form action="" method="post">
+    <a href="{% url 'lottery:index' %}">Home</a>
+</form>
+<h1>Member: {{ member.name }} ({{ member.group }})</h1>
+<h1>Points: {{ member.points }}</h1>
+
+
+<form action="{% url 'lottery:subtract_points' member.id %}" method="post">
+    {% csrf_token %}
+    <label for="subtractPoints" type="number" value="{{ subtract_points }}">
+        Subtract Points:
+    </label>
+    <input id="subtractPoints" type="number" name="subtractPoints" value="{{ subtract_points }}">
+    <input type="submit" value="subtractPoints">
+</form>
+

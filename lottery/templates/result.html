@@ -1,0 +1,9 @@
+<h1>{{ member.name }}</h1>
+
+<ul>
+{% for choice in member.choice_set.all %}
+    <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
+{% endfor %}
+</ul>
+
+<a href="{% url 'lottery:detail' member.id %}">Vote again?</a>

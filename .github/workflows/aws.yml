@@ -31,7 +31,7 @@ on:
     branches: [ "deploy" ]
 
 env:
-  AWS_REGION: MY_AWS_REGION                   # set this to your preferred AWS region, e.g. us-west-1
+  AWS_REGION: ap-northeast-2                # set this to your preferred AWS region, e.g. us-west-1
   ECR_REPOSITORY: for_alex/awesome_lottery           # set this to your Amazon ECR repository name
   ECS_SERVICE: for_Alex_Awesome                 # set this to your Amazon ECS service name
   ECS_CLUSTER: DevForAlex                 # set this to your Amazon ECS cluster name

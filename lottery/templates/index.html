@@ -1,5 +1,5 @@
 <h1>Awesome Lottery</h1>
-<form action="create_member_form/" method="post">
+<form action="{% url 'members:create_member' %}" method="post">
     {% csrf_token %}
     <label for="name">Your name: </label>
     <input id="name" type="text" name="name" value="{{ current_name }}">
@@ -26,7 +26,6 @@
             <option value="C">C</option>
             <option value="C+">C+</option>
         </select>
-
     </pre>
     <input type="submit" value="addMember">
 </form>
@@ -36,7 +35,7 @@
 {% if member_list %}
     <ol>
     {% for member in member_list %}
-        <li><a href="{% url 'lottery:detail' member.id %}">({{ member.group }}) {{ member.name }} - {{ member.points }}</a>
+        <li><a href="{% url 'members:detail' member.id %}">({{ member.group }}) {{ member.name }} - {{ member.total_points }}</a>
             <form action="{% url 'lottery:add_points' member.id %}" method="post">
                 {% csrf_token %}
                 <label for="addPoints" type="number" value="{{ add_points }}">
@@ -46,7 +45,7 @@
                 <input type="submit" value="addPoints">
             </form>
         </li>
-        {% endfor %}
+    {% endfor %}
     </ol>
 {% else %}
     <p>No members are available.</p>

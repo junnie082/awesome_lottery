@@ -10,4 +10,5 @@ urlpatterns = [
     path("<int:member_id>/vote/", views.vote, name="vote"),
     path("create_member_form/", views.create_member_form, name="create_member_form"),
     path("<int:member_id>/add_points/", views.add_points, name="add_points"),
+    path("<int:member_id>/subtract_points/", views.subtract_points, name="subtract_points"),
 ]

@@ -56,7 +56,14 @@ def add_points(request, member_id):
 
     return redirect(reverse('lottery:index'))
 
-
+def subtract_points(request, member_id):
+    if request.method == 'POST':
+        member = get_object_or_404(Member, id=member_id)
+        prev_points = member.points
+        new_points = prev_points - int(request.POST.get('subtractPoints'))
+        member.points = new_points
+        member.save()
+    return redirect(reverse('lottery:detail', args=(member_id,)))
 
 def detail(request, member_id):
     member = get_object_or_404(Member, pk=member_id)

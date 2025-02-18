@@ -1,6 +1,10 @@
 # Python 이미지 사용
 FROM python:3.9-slim
 
+# Apache 설정 파일 수정 (httpd.conf 또는 apache2.conf)
+RUN echo "ServerName 13.125.88.89" >> /etc/httpd/conf/httpd.conf
+
+
 # 작업 디렉토리 설정
 WORKDIR /app
 

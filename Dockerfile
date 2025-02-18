@@ -8,6 +8,9 @@ WORKDIR /app
 COPY requirements.txt /app/
 RUN pip install -r requirements.txt
 
+# Nginx 설치
+RUN apt-get update && apt-get install -y nginx
+
 # 프로젝트 파일 복사
 COPY . /app/
 

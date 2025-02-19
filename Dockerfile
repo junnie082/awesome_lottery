@@ -1,6 +1,7 @@
 FROM python:3.10
 
 # 컨테이너 내 프로젝트 root directory 설정
+RUN rm -rf /app && mkdir /app
 WORKDIR /app
 
 # 필요한 module 설치

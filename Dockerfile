@@ -1,6 +1,7 @@
 FROM python:3.6
 
 # 컨테이너 내 프로젝트 root directory 설정
+RUN mkdir -p /app
 WORKDIR /app
 
 # 필요한 module 설치
@@ -15,4 +16,4 @@ COPY . .
 # 포트 설정
 EXPOSE 8000
 # gunicorn 실행
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "mysite.wsgi:application"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "config.wsgi:application"]

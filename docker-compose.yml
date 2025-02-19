@@ -8,7 +8,7 @@ services:
     command: >
       bash -c "python manage.py collectstatic --noinput
       && python3 manage.py migrate
-      && gunicorn config.wsgi:application --bind 0.0.0.0:8000 --log-level=debug --access-logfile=- --log-file=-"
+      && gunicorn mysite.wsgi:application --bind 0.0.0.0:8000 --log-level=debug --access-logfile=- --log-file=-"
     volumes:
       - ./awesome_lottery:/app  # 호스트에서 클론한 GitHub 코드 디렉토리를 컨테이너의 /app에 마운트
     expose:

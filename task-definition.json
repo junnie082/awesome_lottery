@@ -1,9 +1,9 @@
 {
-    "taskDefinitionArn": "arn:aws:ecs:ap-northeast-2:499269052940:task-definition/for_Alex:2",
+    "taskDefinitionArn": "arn:aws:ecs:ap-northeast-2:499269052940:task-definition/for_Alex",
     "containerDefinitions": [
         {
             "name": "for_Alex_Awesome",
-            "image": "499269052940.dkr.ecr.ap-northeast-2.amazonaws.com/for_alex/awesome_lottery/f33284ba7e182098d0ec254a84cba5637a0f2806",
+            "image": "499269052940.dkr.ecr.ap-northeast-2.amazonaws.com/for_alex/awesome_lottery/",
             "cpu": 0,
             "portMappings": [
                 {

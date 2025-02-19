@@ -1,7 +1,7 @@
 FROM python:3.6
 
 # 컨테이너 내 프로젝트 root directory 설정
-WORKDIR /usr/src/app
+WORKDIR /app
 
 # 필요한 module 설치
 COPY requirements.txt ./

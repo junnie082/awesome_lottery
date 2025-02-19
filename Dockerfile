@@ -1,14 +1,18 @@
-FROM python:3.8
+FROM python:3.6
 
-ENV PYTHONUNBUFFERED 1
+# 컨테이너 내 프로젝트 root directory 설정
+WORKDIR /usr/src/app
 
-RUN apt-get -y update && apt-get -y install vim && apt-get clean
-RUN mkdir /project
-ADD . /project
-
-WORKDIR /project
+# 필요한 module 설치
+COPY requirements.txt ./
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
+# 프로젝트 코드 복사
+COPY . .
+
+### 이 아래 command들은 docker-compose에 작성할 내용이므로, 확인 후 삭제한다.
+# 포트 설정
 EXPOSE 8000
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+# gunicorn 실행
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "config.wsgi:application"]

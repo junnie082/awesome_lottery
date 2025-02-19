@@ -11,9 +11,6 @@ RUN pip install -r requirements.txt
 # 프로젝트 코드 복사
 COPY . .
 
-# Django 프로젝트에서 정적 파일 수집
-RUN python manage.py collectstatic --noinput
-
 # 포트 설정
 EXPOSE 8000
 

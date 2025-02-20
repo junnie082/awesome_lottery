@@ -5,7 +5,7 @@
     <input id="name" type="text" name="name" value="{{ current_name }}">
     <br>
     <label for="points">Points: </label>
-    <input id="points" type="number" name="points" value="{{ points }}">
+    <input id="total_points" type="number" name="total_points" value="{{ total_points1 }}">
     <br>
     <label for="group">Class: &nbsp;</label>
     <pre class="container my-3" id="group">
@@ -35,7 +35,7 @@
 {% if member_list %}
     <ol>
     {% for member in member_list %}
-        <li><a href="{% url 'members:detail' member.id %}">({{ member.group }}) {{ member.name }} - {{ member.total_points }}</a>
+        <li><a href="{% url 'members:detail' member.id %}">({{ member.group_time_mode }}{{ member.group_level_mode }}) {{ member.name }} - {{ member.total_points }}</a>
             <form action="{% url 'lottery:add_points' member.id %}" method="post">
                 {% csrf_token %}
                 <label for="addPoints" type="number" value="{{ add_points }}">

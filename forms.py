@@ -6,6 +6,6 @@ from members.models import Member
 class MemForm(forms.ModelForm):
     class Meta:
         model = Member
-        # fields = '__all__'
-        fields = ['name', 'group', 'total_points']
+        fields = '__all__'
+        # fields = ['name', 'group', 'total_points']
 

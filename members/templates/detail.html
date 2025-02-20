@@ -4,6 +4,9 @@
 <h1>Member: {{ member.name }} ({{ member.group }})</h1>
 <h2>TOTAL POINTS: {{ member.total_points }}</h2>
 
+<h3># Chances: {{ num_chances }}</h3>
+<h3># Remaining Points: {{ remaining_points }}</h3>
+
 <form action="{% url 'lottery:add_points' member.id %}" method="post">
     {% csrf_token %}
     <label for="addPoints" type="number" value="{{ add_points }}">
@@ -18,7 +21,6 @@
     <li><h4>Point: {{ point.points }} ---- {{ point.date|date:'m-d'}}</h4></li>
     {% endfor %}
 </ol>
-
 
 <form action="{% url 'members:delete_member' member.id %}" method="post">
     {% csrf_token %}

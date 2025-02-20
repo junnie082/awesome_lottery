@@ -145,7 +145,7 @@ jobs:
 
     - name: Deploy to EC2 server
       run: |
-        ssh -o StrictHostKeyChecking=no ubuntu@ip-172-31-43-195 << 'EOF'
+        ssh -o StrictHostKeyChecking=no ubuntu@13.125.88.89 << 'EOF'
           cd /home/ubuntu/awesome_lottery
           git pull
           source ../mysite/bin/activate

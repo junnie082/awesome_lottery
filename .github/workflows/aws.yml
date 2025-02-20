@@ -104,17 +104,28 @@
 
 
 #   name: Deploy Django
-
 on:
   push:
     branches:
-      - deploy  # or master, depending on your branch
+      - deploy  # 또는 master, 원하는 배포 브랜치 지정
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ap-northeast-2  # AWS_REGION 환경변수 설정 필요
+
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
+ 
     - name: Checkout code
       uses: actions/checkout@v2
 
@@ -132,11 +143,16 @@ jobs:
       run: |
         python manage.py migrate
 
-    - name: Collect static files
+    - name: Deploy to EC2 server
       run: |
-        python manage.py collectstatic --noinput
+        ssh -o StrictHostKeyChecking=no ubuntu@ip-172-31-43-195 << 'EOF'
+          cd /home/ubuntu/awesome_lottery
+          git pull
+          source ../mysite/bin/activate
+          pip install -r requirements.txt  # 혹시 변경된 의존성이 있다면 설치
+          sudo fuser -k 8000/tcp  # 기존 프로세스 종료
+          nohup python manage.py runserver 0.0.0.0:8000 & 
+          exit
+        EOF
 
-    - name: Deploy to server
-      run: |
-        ssh ubuntu@ip-172-31-43-195 'cd /path/to/project && git pull && sudo systemctl restart your-service'
 

@@ -145,14 +145,18 @@ jobs:
 
     - name: Deploy to EC2 server
       run: |
-        ssh -o StrictHostKeyChecking=no ubuntu@13.125.88.89 << 'EOF'
+        echo "${{ secrets.AWS_SSH_PRIVATE_KEY }}" > for_Alex.pem
+        chmod 600 for_Alex.pem
+
+        ssh -i for_Alex.pem -o StrictHostKeyChecking=no ubuntu@13.125.88.89 << 'EOF'
           cd /home/ubuntu/awesome_lottery
           git pull
           source ../mysite/bin/activate
-          pip install -r requirements.txt  # 혹시 변경된 의존성이 있다면 설치
+          pip install -r requirements.txt  # 필요 시 패키지 설치
           sudo fuser -k 8000/tcp  # 기존 프로세스 종료
           nohup python manage.py runserver 0.0.0.0:8000 & 
           exit
         EOF
+
 
 

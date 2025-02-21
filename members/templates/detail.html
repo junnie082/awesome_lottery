@@ -1,7 +1,7 @@
 <form action="" method="post">
     <a href="{% url 'lottery:index' %}">Home</a>
 </form>
-<h1>Member: {{ member.name }} ({{ member.time }}{{ member.level }})</h1>
+<h1>Member: {{ member.name }} ({{ member.mem_time }}{{ member.mem_level }})</h1>
 <h2>TOTAL POINTS: {{ member.total_points }}</h2>
 
 <h3># Chances: {{ num_chances }}</h3>

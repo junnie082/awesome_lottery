@@ -5,13 +5,13 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("lottery", "0001_initial"),
+        ("members", "0002_alter_member_name"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name="point",
-            name="points",
-            field=models.FloatField(default=0),
+            model_name="member",
+            name="total_points",
+            field=models.FloatField(blank=True, default=0, null=True),
         ),
     ]

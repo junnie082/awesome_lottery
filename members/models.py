@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 class Member(models.Model):
-    name = models.CharField(unique=True, max_length=100)
+    name = models.CharField(max_length=100)
     time_Choices = (('230', '230'), ('330', '330'), ('430', '430'), ('530', '530'), ('630', '630'))
     level_Choices = (('A', 'A'), ('A+', 'A+'), ('B', 'B'), ('B+', 'B+'), ('C', 'C'), ('C+', 'C+'))
     mem_time = models.CharField(max_length=100, choices=time_Choices)

@@ -28,11 +28,11 @@ def create_dashboard(request):
 # Create your views here.
 def get_dashboard(request):
     dashboard = Dashboard.objects.reverse().first()
-    first_class_members = Member.objects.all().filter(mem_level=dashboard.first_class)
-    second_class_members = Member.objects.all().filter(mem_level=dashboard.second_class)
-    third_class_members = Member.objects.all().filter(mem_level=dashboard.third_class)
-    fourth_class_members = Member.objects.all().filter(mem_level=dashboard.fourth_class)
-    fifth_class_members = Member.objects.all().filter(mem_level=dashboard.fifth_class)
+    first_class_members = Member.objects.all().filter(mem_time='230', mem_level=dashboard.first_class)
+    second_class_members = Member.objects.all().filter(mem_time='330', mem_level=dashboard.second_class)
+    third_class_members = Member.objects.all().filter(mem_time='430', mem_level=dashboard.third_class)
+    fourth_class_members = Member.objects.all().filter(mem_time='530', mem_level=dashboard.fourth_class)
+    fifth_class_members = Member.objects.all().filter(mem_time='630', mem_level=dashboard.fifth_class)
 
     if request.method == 'GET':
 

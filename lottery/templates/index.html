@@ -77,7 +77,7 @@
     {% if member_list %}
         <ol>
         {% for member in member_list %}
-            <li><a href="{% url 'members:detail' member.id %}">({{ member.mem_level }}{{ member.mem_time }}) {{ member.name }} - {{ member.total_points }}</a>
+            <li><a href="{% url 'members:detail' member.id %}">({{ member.mem_time }}{{ member.mem_level }}) {{ member.name }} - {{ member.total_points }}</a>
                 <form action="{% url 'lottery:create_point' member.id %}" method="post">
                     {% csrf_token %}
                     <label for="addPoints" type="number" value="{{ create_points }}">

@@ -20,7 +20,6 @@ def create_member(request):
     if request.method == 'POST' or request.method == 'FILES':
         form = MemForm(request.POST, request.FILES)
 
-
         # 유효성 검사
         if form.is_valid():
             point = request.POST.get('total_points')
@@ -35,6 +34,10 @@ def create_member(request):
             if point != 0:
                 obj_point = Point.objects.create(member=member, points=point)
                 obj_point.points = point
+
+            level = Level.objects.create(member=member)
+            level.level = request.POST.get('level')
+            level.save()
 
             return redirect('lottery:index')
 

@@ -7,7 +7,7 @@ class Member(models.Model):
     level_Choices = (('A', 'A'), ('A+', 'A+'), ('B', 'B'), ('B+', 'B+'), ('C', 'C'), ('C+', 'C+'))
     mem_time = models.CharField(max_length=100, choices=time_Choices)
     mem_level = models.CharField(max_length=100, choices=level_Choices)
-    total_points = models.IntegerField(default=0, blank=True, null=True)
+    total_points = models.FloatField(default=0, blank=True, null=True)
 
     def __str__(self):
         return self.name

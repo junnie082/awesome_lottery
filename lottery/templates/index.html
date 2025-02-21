@@ -30,67 +30,42 @@
             </select>
             <select name="mem_level" id="mem_level">
                 <option value="">Level</option>
-                <option value="A">A</option>
-                <option value="A+">A+</option>
-                <option value="B">B</option>
-                <option value="B+">B+</option>
-                <option value="C">C</option>
-                <option value="C+">C+</option>
+                {% include "levels.html" %}
             </select>
         </pre>
         <input type="submit" value="Add Member">
     </form>
-
+    <p>230{{ dashboard.first_class }}
+        330{{ dashboard.second_class }}
+        430{{ dashboard.third_class }}
+        530{{ dashboard.fourth_class }}
+        630{{ dashboard.fifth_class }}
+    </p>
     <form action="{% url 'dashboard:create_dashboard' %}" method="post">
         {% csrf_token %}
         <select name="first_class" id="first_class">
             <option value="">230</option>
-            <option value="A">A</option>
-            <option value="A+">A+</option>
-            <option value="B">B</option>
-            <option value="B+">B+</option>
-            <option value="C">C</option>
-            <option value="C+">C+</option>
+            {% include "levels.html" %}
         </select>
 
         <select name="second_class" id="second_class">
             <option value="">330</option>
-            <option value="A">A</option>
-            <option value="A+">A+</option>
-            <option value="B">B</option>
-            <option value="B+">B+</option>
-            <option value="C">C</option>
-            <option value="C+">C+</option>
+            {% include "levels.html" %}
         </select>
 
         <select name="third_class" id="third_class">
             <option value="">430</option>
-            <option value="A">A</option>
-            <option value="A+">A+</option>
-            <option value="B">B</option>
-            <option value="B+">B+</option>
-            <option value="C">C</option>
-            <option value="C+">C+</option>
+            {% include "levels.html" %}
         </select>
 
         <select name="fourth_class" id="fourth_class">
             <option value="">530</option>
-            <option value="A">A</option>
-            <option value="A+">A+</option>
-            <option value="B">B</option>
-            <option value="B+">B+</option>
-            <option value="C">C</option>
-            <option value="C+">C+</option>
+            {% include "levels.html" %}
         </select>
 
         <select name="fifth_class" id="fifth_class">
             <option value="">630</option>
-            <option value="A">A</option>
-            <option value="A+">A+</option>
-            <option value="B">B</option>
-            <option value="B+">B+</option>
-            <option value="C">C</option>
-            <option value="C+">C+</option>
+            {% include "levels.html" %}
         </select>
         <input type="submit" value="Create Dashboard">
     </form>

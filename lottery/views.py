@@ -3,6 +3,7 @@ from datetime import datetime
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 
+from dashboard.models import Dashboard
 from lottery.functions.sum_points import sum_points
 from lottery.models import Point
 from members.models import Member, Level
@@ -10,8 +11,10 @@ from members.models import Member, Level
 
 def index(request):
     member_list = Member.objects.order_by("-name")
+    dashboard = Dashboard.objects.reverse().first()
     context = {
         "member_list": member_list,
+        "dashboard": dashboard,
     }
     return render(request, "index.html", context)
 

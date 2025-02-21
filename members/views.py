@@ -20,15 +20,21 @@ def create_member(request):
     if request.method == 'POST' or request.method == 'FILES':
         form = MemForm(request.POST, request.FILES)
 
+
         # 유효성 검사
         if form.is_valid():
-            form.cleaned_data['total_points'] = request.POST.get('total_points')
-            form.save()
-            # form.cleaned_data['group'] = group
-            # record = form.save(commit=False)
-            # record.group = level
-            # record.save()
-            # print("group: " + form.cleaned_data['group'])
+            point = request.POST.get('total_points')
+            if point is None or point == '':
+                point = 0
+
+            point = int(point)
+
+            form.cleaned_data['total_points'] = point
+            member = form.save()
+
+            if point != 0:
+                obj_point = Point.objects.create(member=member, points=point)
+                obj_point.points = point
 
             return redirect('lottery:index')
 
@@ -44,7 +50,7 @@ def detail(request, member_id):
     point_list = Point.objects.order_by('-date').filter(member=member)
 
     total_points = sum_points(member_id)
-    num_chances = total_points / 30
+    num_chances = int(total_points / 30)
     remaining_points = total_points % 30
     print("num_chans", num_chances)
     print("remaining_points", remaining_points)

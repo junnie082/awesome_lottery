@@ -15,17 +15,20 @@ def index(request):
     }
     return render(request, "index.html", context)
 
-def add_points(request, member_id):
+def add_point(request, member_id):
     if request.method == 'POST':
         add_points = request.POST.get('addPoints')
-        print(add_points)
+
+        if not add_points:
+            add_points = 0
+            print('add_points: ' + str(add_points))
 
         member = get_object_or_404(Member, id=member_id)
         points = Point.objects.filter(member_id=member_id)
         points.order_by('-date')
 
         new_point = Point.objects.create(member=member)
-        new_point.points = points.first().points + int(add_points)
+        new_point.points = int(add_points)
         new_point.date = datetime.now()
         new_point.save()
 
@@ -39,3 +42,15 @@ def add_points(request, member_id):
         new_point.save()
     return redirect(reverse('members:detail', kwargs={'member_id': member_id}))
 
+
+def delete_point(request, point_id):
+    point = get_object_or_404(Point, id=point_id)
+    member = point.member
+    if request.method == 'POST':
+        point.delete()
+
+    member.total_points = sum_points(member.id)
+    member.save()
+    print('total_points', member.total_points)
+
+    return redirect(reverse('members:detail', kwargs={'member_id': member.id}))

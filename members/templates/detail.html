@@ -7,18 +7,22 @@
 <h3># Chances: {{ num_chances }}</h3>
 <h3># Remaining Points: {{ remaining_points }}</h3>
 
-<form action="{% url 'lottery:add_points' member.id %}" method="post">
+<form action="{% url 'lottery:add_point' member.id %}" method="post">
     {% csrf_token %}
     <label for="addPoints" type="number" value="{{ add_points }}">
         Add Points:
     </label>
     <input id="addPoints" type="number" name="addPoints" value="{{ add_points }}">
-    <input type="submit" value="addPoints">
+    <input type="submit" value="Add">
 </form>
 
 <ol>
     {% for point in point_list %}
     <li><h4>Point: {{ point.points }} ---- {{ point.date|date:'m-d'}}</h4></li>
+    <form action="{% url 'lottery:delete_point' point.id %}" method="post">
+        {% csrf_token %}
+        <input id="deletePoint" type="submit" name="deletePoint" value="Delete">
+    </form>
     {% endfor %}
 </ol>
 

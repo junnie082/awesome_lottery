@@ -141,7 +141,7 @@ jobs:
 
     - name: Run migrations
       run: |
-        python manage.py makemigrations
+        python manage.py makemigrations --merge
         python manage.py migrate
 
     - name: Deploy to EC2 server

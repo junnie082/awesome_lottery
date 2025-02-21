@@ -20,7 +20,7 @@
         <br>
         <label for="group">Class: &nbsp;</label>
         <pre class="container my-3" id="group">
-            <select name="group_time_mode" id="group_time_mode">
+            <select name="mem_time" id="mem_time">
                 <option value="">Time</option>
                 <option value="230">230</option>
                 <option value="330">330</option>
@@ -28,7 +28,7 @@
                 <option value="530">530</option>
                 <option value="630">630</option>
             </select>
-            <select name="group_level_mode" id="group_level_mode">
+            <select name="mem_level" id="mem_level">
                 <option value="">Level</option>
                 <option value="A">A</option>
                 <option value="A+">A+</option>
@@ -38,21 +38,77 @@
                 <option value="C+">C+</option>
             </select>
         </pre>
-        <input type="submit" value="addMember">
+        <input type="submit" value="Add Member">
     </form>
 
+    <form action="{% url 'dashboard:create_dashboard' %}" method="post">
+        {% csrf_token %}
+        <select name="first_class" id="first_class">
+            <option value="">230</option>
+            <option value="A">A</option>
+            <option value="A+">A+</option>
+            <option value="B">B</option>
+            <option value="B+">B+</option>
+            <option value="C">C</option>
+            <option value="C+">C+</option>
+        </select>
 
+        <select name="second_class" id="second_class">
+            <option value="">330</option>
+            <option value="A">A</option>
+            <option value="A+">A+</option>
+            <option value="B">B</option>
+            <option value="B+">B+</option>
+            <option value="C">C</option>
+            <option value="C+">C+</option>
+        </select>
+
+        <select name="third_class" id="third_class">
+            <option value="">430</option>
+            <option value="A">A</option>
+            <option value="A+">A+</option>
+            <option value="B">B</option>
+            <option value="B+">B+</option>
+            <option value="C">C</option>
+            <option value="C+">C+</option>
+        </select>
+
+        <select name="fourth_class" id="fourth_class">
+            <option value="">530</option>
+            <option value="A">A</option>
+            <option value="A+">A+</option>
+            <option value="B">B</option>
+            <option value="B+">B+</option>
+            <option value="C">C</option>
+            <option value="C+">C+</option>
+        </select>
+
+        <select name="fifth_class" id="fifth_class">
+            <option value="">630</option>
+            <option value="A">A</option>
+            <option value="A+">A+</option>
+            <option value="B">B</option>
+            <option value="B+">B+</option>
+            <option value="C">C</option>
+            <option value="C+">C+</option>
+        </select>
+        <input type="submit" value="Create Dashboard">
     </form>
+
+    <form action="{% url 'dashboard:get_dashboard' %}" method="get">
+        <input type="submit" value="DASHBOARD">
+    </form>
+
     {% if member_list %}
         <ol>
         {% for member in member_list %}
-            <li><a href="{% url 'members:detail' member.id %}">({{ member.group_time_mode }}{{ member.group_level_mode }}) {{ member.name }} - {{ member.total_points }}</a>
-                <form action="{% url 'lottery:add_point' member.id %}" method="post">
+            <li><a href="{% url 'members:detail' member.id %}">({{ member.mem_level }}{{ member.mem_time }}) {{ member.name }} - {{ member.total_points }}</a>
+                <form action="{% url 'lottery:create_point' member.id %}" method="post">
                     {% csrf_token %}
-                    <label for="addPoints" type="number" value="{{ add_points }}">
+                    <label for="addPoints" type="number" value="{{ create_points }}">
                         Add Points:
                     </label>
-                    <input id="addPoints" type="number" name="addPoints" value="{{ add_points }}">
+                    <input id="addPoints" type="number" name="addPoints" value="{{ create_points }}">
                     <input type="submit" value="addPoints">
                 </form>
             </li>

@@ -5,7 +5,7 @@ from django.urls import reverse
 
 from lottery.functions.sum_points import sum_points
 from lottery.models import Point
-from members.models import Member
+from members.models import Member, Level
 
 
 def index(request):
@@ -15,31 +15,47 @@ def index(request):
     }
     return render(request, "index.html", context)
 
-def add_point(request, member_id):
+def create_point(request, member_id):
     if request.method == 'POST':
-        add_points = request.POST.get('addPoints')
-
-        if not add_points:
-            add_points = 0
-            print('add_points: ' + str(add_points))
-
         member = get_object_or_404(Member, id=member_id)
-        points = Point.objects.filter(member_id=member_id)
-        points.order_by('-date')
-
         new_point = Point.objects.create(member=member)
-        new_point.points = int(add_points)
         new_point.date = datetime.now()
+
+        is_dashboard = True
+
+
+        if request.POST.get('pt_point_five'): new_point.points = 0.5
+        if request.POST.get('pt_one'): new_point.points = 1
+        if request.POST.get('pt_two'): new_point.points = 2
+        if request.POST.get('pt_three'): new_point.points = 3
+        if request.POST.get('pt_four'): new_point.points = 4
+        if request.POST.get('pt_five'): new_point.points = 5
+        if request.POST.get('pt_ten'): new_point.points = 10
+
+        if request.POST.get('pt_minus_point_five'): new_point.points = -0.5
+        if request.POST.get('pt_minus_one'): new_point.points = -1
+        if request.POST.get('pt_minus_two'): new_point.points = -2
+        if request.POST.get('pt_minus_three'): new_point.points = -3
+        if request.POST.get('pt_minus_four'): new_point.points = -4
+        if request.POST.get('pt_minus_five'): new_point.points = -5
+        if request.POST.get('pt_minus_ten'): new_point.points = -10
+
+        if request.POST.get('addPoints'):
+            new_point.points = 0
+            is_dashboard = False
+
         new_point.save()
 
         member.total_points = sum_points(member_id)
-
-        print('total_points', member.total_points)
         member.save()
 
-        print(new_point.points)
 
-        new_point.save()
+        print('new_point.points: ', new_point.points)
+        print(member.total_points)
+
+        if is_dashboard:
+            return redirect('dashboard:get_dashboard')
+
     return redirect(reverse('members:detail', kwargs={'member_id': member_id}))
 
 

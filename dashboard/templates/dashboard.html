@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h1>230{{ dashboard.first_class }}</h1>
+{% for member in first_class_members %}
+<a href="{% url 'members:detail' member.id %}">{{ member.name }} {{ member.total_points }}</a>
+<form action="{% url 'lottery:create_point' member.id %}" method="post">
+{% csrf_token %}
+{% include "point_system.html" %}
+</form>
+{% endfor %}
+
+<h1>330{{ dashboard.second_class }}</h1>
+{% for member in second_class_members %}
+<a href="{% url 'members:detail' member.id %}">{{ member.name }} {{ member.total_points }}</a>
+<form action="{% url 'lottery:create_point' member.id %}" method="post">
+{% csrf_token %}
+{% include "point_system.html" %}
+</form>
+{% endfor %}
+
+<h1>430{{ dashboard.third_class }}</h1>
+{% for member in third_class_members %}
+<a href="{% url 'members:detail' member.id %}">{{ member.name }} {{ member.total_points }}</a>
+<form action="{% url 'lottery:create_point' member.id %}" method="post">
+{% csrf_token %}
+{% include "point_system.html" %}
+</form>
+{% endfor %}
+
+<h1>530{{ dashboard.fourth_class }}</h1>
+{% for member in fourth_class_members %}
+<a href="{% url 'members:detail' member.id %}">{{ member.name }} {{ member.total_points }}</a>
+<form action="{% url 'lottery:create_point' member.id %}" method="post">
+{% csrf_token %}
+{% include "point_system.html" %}
+</form>
+{% endfor %}
+
+<h1>630{{ dashboard.fifth_class }}</h1>
+{% for member in fifth_class_members %}
+<a href="{% url 'members:detail' member.id %}">{{ member.name }} {{ member.total_points }}</a>
+<form action="{% url 'lottery:create_point' member.id %}" method="post">
+{% csrf_token %}
+{% include "point_system.html" %}
+</form>
+{% endfor %}
+
+
+
+
+<a href="{% url 'lottery:index' %}">HOME</a>
+</body>
+</html>

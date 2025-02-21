@@ -1,18 +1,18 @@
 <form action="" method="post">
     <a href="{% url 'lottery:index' %}">Home</a>
 </form>
-<h1>Member: {{ member.name }} ({{ member.group }})</h1>
+<h1>Member: {{ member.name }} ({{ member.time }}{{ member.level }})</h1>
 <h2>TOTAL POINTS: {{ member.total_points }}</h2>
 
 <h3># Chances: {{ num_chances }}</h3>
 <h3># Remaining Points: {{ remaining_points }}</h3>
 
-<form action="{% url 'lottery:add_point' member.id %}" method="post">
+<form action="{% url 'lottery:create_point' member.id %}" method="post">
     {% csrf_token %}
-    <label for="addPoints" type="number" value="{{ add_points }}">
+    <label for="addPoints" type="number" value="{{ create_points }}">
         Add Points:
     </label>
-    <input id="addPoints" type="number" name="addPoints" value="{{ add_points }}">
+    <input id="addPoints" type="number" name="addPoints" value="{{ create_points }}">
     <input type="submit" value="Add">
 </form>
 

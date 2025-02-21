@@ -31,6 +31,7 @@ ALLOWED_HOSTS = ['13.125.88.89', 'localhost']
 # Application definition
 
 INSTALLED_APPS = [
+    "dashboard.apps.DashboardConfig",
     "lottery.apps.LotteryConfig",
     "members.apps.MembersConfig",
     "django.contrib.admin",

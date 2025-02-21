@@ -23,6 +23,7 @@ def create_member(request):
         # 유효성 검사
         if form.is_valid():
             point = request.POST.get('total_points')
+
             if point is None or point == '':
                 point = 0
 
@@ -33,11 +34,12 @@ def create_member(request):
 
             if point != 0:
                 obj_point = Point.objects.create(member=member, points=point)
-                obj_point.points = point
+                obj_point.save()
 
-            level = Level.objects.create(member=member)
-            level.level = request.POST.get('level')
-            level.save()
+            level = str(member.mem_time) + str(member.mem_level)
+
+            obj_level = Level.objects.create(member=member, level=level)
+            obj_level.save()
 
             return redirect('lottery:index')
 

@@ -12,6 +12,7 @@ from members.models import Member, Level
 def index(request):
     member_list = Member.objects.order_by("-name")
     dashboard = Dashboard.objects.reverse().first()
+
     context = {
         "member_list": member_list,
         "dashboard": dashboard,

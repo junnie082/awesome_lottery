@@ -109,6 +109,7 @@ on:
     branches:
       - deploy  # 또는 master, 원하는 배포 브랜치 지정
 
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -136,11 +137,13 @@ jobs:
 
     - name: Install dependencies
       run: |
+        echo "GEMINI_API_KEY =${{secrets.GEMINI_API_KEY}}" >> .env
         python -m pip install --upgrade pip
         python -m pip install django-environ
         pip install google
         pip install -q -U google-generativeai
         pip install -r requirements.txt
+
 
     - name: Run migrations
       run: |

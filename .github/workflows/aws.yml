@@ -143,6 +143,8 @@ jobs:
         pip install google
         pip install -q -U google-generativeai
         pip install -r requirements.txt
+      env:  
+        GEMINI_API_KEY: ${{secrets.GEMINI_API_KEY}}
 
 
     - name: Run migrations

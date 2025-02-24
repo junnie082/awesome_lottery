@@ -164,6 +164,7 @@ jobs:
           git pull origin deploy
           source ../mysite/bin/activate
           pip install -r requirements.txt  # 필요 시 패키지 설치
+          python -m pip install django-environ
           sudo fuser -k 8000/tcp  # 기존 프로세스 종료
           nohup python manage.py runserver 0.0.0.0:8000 & 
           exit

@@ -147,6 +147,7 @@ jobs:
     - name: Run migrations
       run: |
         echo "GEMINI_API_KEY =${{secrets.GEMINI_API_KEY}}" >> .env
+        python manage.py makemigrations
         python manage.py migrate
       env:  
         GEMINI_API_KEY: ${{secrets.GEMINI_API_KEY}}

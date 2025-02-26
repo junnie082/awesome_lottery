@@ -1,20 +1,24 @@
 from datetime import datetime
 
+from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 
 from dashboard.models import Dashboard
 from lottery.functions.sum_points import sum_points
 from lottery.models import Point
-from members.models import Member, Level
+from members.models import Member
 
 
 def index(request):
+    page = request.GET.get('page', 1)
     member_list = Member.objects.order_by("-name")
+    paginator = Paginator(member_list, 10)
+    page_obj = paginator.get_page(page)
     dashboard = Dashboard.objects.reverse().first()
 
     context = {
-        "member_list": member_list,
+        "member_list": page_obj,
         "dashboard": dashboard,
     }
     return render(request, "index.html", context)

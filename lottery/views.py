@@ -13,7 +13,7 @@ from members.models import Member
 def index(request):
     page = request.GET.get('page', 1)
     member_list = Member.objects.order_by("-name")
-    paginator = Paginator(member_list, 10)
+    paginator = Paginator(member_list, 5)
     page_obj = paginator.get_page(page)
     dashboard = Dashboard.objects.reverse().first()
 

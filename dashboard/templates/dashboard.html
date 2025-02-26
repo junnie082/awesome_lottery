@@ -18,7 +18,7 @@
             <a style="text-decoration: none; font-size: 20px;" class="text text-bg-primary rounded-2 p-1" href="{% url 'members:get_create_member_form' class_time=class_time class_level=class_level %}">Add Member</a>
         </h2>
         <form class="text text-bg-dark p-3" action="{% url 'lottery:entire_mem_point' class_time=class_time class_level=class_level %}" method="post">
-            <h2>Entire Member Point</h2>
+            <h2>All Students</h2>
             {% csrf_token %}
             {% include "point_system.html" %}
         </form>

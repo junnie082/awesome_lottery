@@ -10,6 +10,7 @@
   </head>
 
   <body>
+
   <div>
     <a href="{% url 'lottery:index' %}" class="btn-close" aria-label="Close"></a>
 
@@ -46,14 +47,12 @@
     <ol class="border border-2 border-dark p-3">
         {% for point in point_list %}
         <div style="display: flex; flex-direction: row">
-            <li>
-                <h3>{{ point.points }} ---- </h3>
-            </li>
 
                 <h6 style="margin: 5px;">{{ point.date|date:'m/d'}}</h6>
+                <h3 class="m2">{{ point.points }}</h3>
                 <form action="{% url 'lottery:delete_point' point.id %}" method="post">
                     {% csrf_token %}
-                    <input class="text text-danger p-0" id="deletePoint" type="submit" name="deletePoint" value="Delete">
+                    <input class="text text-bg-danger border border-danger" id="deletePoint" type="submit" name="deletePoint" value="Delete">
                 </form>
         </div>
         {% endfor %}

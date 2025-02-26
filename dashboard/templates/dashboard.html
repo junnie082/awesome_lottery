@@ -13,12 +13,20 @@
     <div>
         <a href="{% url 'lottery:index' %}" class="btn-close" aria-label="Close"></a>
     </div>
-        <h2 style="text-align: center" class="text-bg-warning p-1 rounded-pill">{{ class_time }}{{ class_level }}      <a style="text-decoration: none; font-size: 20px;" class="text text-bg-primary rounded-2 p-1" href="{% url 'members:get_create_member_form' class_time=class_time class_level=class_level %}">Add Member</a></h2>
+        <h2 class="text-bg-warning p-3 rounded-pill">
+            {{ class_time }}{{ class_level }}
+            <a style="text-decoration: none; font-size: 20px;" class="text text-bg-primary rounded-2 p-1" href="{% url 'members:get_create_member_form' class_time=class_time class_level=class_level %}">Add Member</a>
+        </h2>
+        <form class="text text-bg-dark p-3" action="{% url 'lottery:entire_mem_point' class_time=class_time class_level=class_level %}" method="post">
+            <h2>Entire Member Point</h2>
+            {% csrf_token %}
+            {% include "point_system.html" %}
+        </form>
         {% for member in class_members %}
         <a style="color: gray; font-size: 30px;" href="{% url 'members:detail' member.id %}">{{ member.name }} {{ member.total_points }}</a>
         <form action="{% url 'lottery:create_point' member.id %}" method="post">
-        {% csrf_token %}
-        {% include "point_system.html" %}
+            {% csrf_token %}
+            {% include "point_system.html" %}
         </form>
         {% endfor %}
 

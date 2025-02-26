@@ -19,6 +19,34 @@ def index(request):
     }
     return render(request, "index.html", context)
 
+def entire_mem_point(request, class_time, class_level):
+    if request.method == "POST":
+        print('entire_point', class_time, class_level)
+        members = Member.objects.filter(mem_time=class_time, mem_level=class_level)
+        point = 0
+        print('enter_point')
+        if request.POST.get('pt_point_five'): point = 0.5
+        if request.POST.get('pt_one'): point = 1
+        if request.POST.get('pt_two'): point = 2
+        if request.POST.get('pt_three'): point = 3
+        if request.POST.get('pt_four'): point = 4
+        if request.POST.get('pt_five'): point = 5
+        if request.POST.get('pt_six'): point = 6
+        if request.POST.get('pt_seven'): point = 7
+        if request.POST.get('pt_eight'): point = 8
+        if request.POST.get('pt_nine'): point = 9
+        if request.POST.get('pt_ten'): point = 10
+        if request.POST.get('pt_minus_five'): point = -5
+        if request.POST.get('pt_minus_ten'): point = -10
+
+        for member in members:
+            Point.objects.create(points=point, member=member)
+            member.total_points = member.total_points + point
+            member.save()
+
+        return redirect(reverse('dashboard:get_dashboard', kwargs={'class_time': class_time, 'class_level': class_level}))
+
+
 def create_point(request, member_id):
     if request.method == 'POST':
         member = get_object_or_404(Member, id=member_id)
@@ -26,7 +54,6 @@ def create_point(request, member_id):
         new_point.date = datetime.now()
 
         is_dashboard = True
-
 
         if request.POST.get('pt_point_five'): new_point.points = 0.5
         if request.POST.get('pt_one'): new_point.points = 1

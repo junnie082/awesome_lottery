@@ -8,54 +8,20 @@
     <link rel="stylesheet" href="../../static/style.css">
 </head>
 <body>
-<div>
-<a href="{% url 'lottery:index' %}" class="btn-close" aria-label="Close"></a>
 
-<h1 class="text-bg-warning p-1 rounded-pill">230{{ dashboard.first_class }}</h1>
-{% for member in first_class_members %}
-<a href="{% url 'members:detail' member.id %}">{{ member.name }} {{ member.total_points }}</a>
-<form action="{% url 'lottery:create_point' member.id %}" method="post">
-{% csrf_token %}
-{% include "point_system.html" %}
-</form>
-{% endfor %}
+    <div class="p-3 border border-primary-subtle rounded-3">
+    <div>
+        <a href="{% url 'lottery:index' %}" class="btn-close" aria-label="Close"></a>
+    </div>
+        <h2 style="text-align: center" class="text-bg-warning p-1 rounded-pill">{{ class_time }}{{ class_level }}      <a style="text-decoration: none; font-size: 20px;" class="text text-bg-primary rounded-2 p-1" href="{% url 'members:get_create_member_form' class_time=class_time class_level=class_level %}">Add Member</a></h2>
+        {% for member in class_members %}
+        <a style="color: gray; font-size: 30px;" href="{% url 'members:detail' member.id %}">{{ member.name }} {{ member.total_points }}</a>
+        <form action="{% url 'lottery:create_point' member.id %}" method="post">
+        {% csrf_token %}
+        {% include "point_system.html" %}
+        </form>
+        {% endfor %}
 
-<h1 class="text-bg-warning p-1 rounded-pill">330{{ dashboard.second_class }}</h1>
-{% for member in second_class_members %}
-<a href="{% url 'members:detail' member.id %}">{{ member.name }} {{ member.total_points }}</a>
-<form action="{% url 'lottery:create_point' member.id %}" method="post">
-{% csrf_token %}
-{% include "point_system.html" %}
-</form>
-{% endfor %}
-
-<h1 class="text-bg-warning p-1 rounded-pill">430{{ dashboard.third_class }}</h1>
-{% for member in third_class_members %}
-<a href="{% url 'members:detail' member.id %}">{{ member.name }} {{ member.total_points }}</a>
-<form action="{% url 'lottery:create_point' member.id %}" method="post">
-{% csrf_token %}
-{% include "point_system.html" %}
-</form>
-{% endfor %}
-
-<h1 class="text-bg-warning p-1 rounded-pill">530{{ dashboard.fourth_class }}</h1>
-{% for member in fourth_class_members %}
-<a href="{% url 'members:detail' member.id %}">{{ member.name }} {{ member.total_points }}</a>
-<form action="{% url 'lottery:create_point' member.id %}" method="post">
-{% csrf_token %}
-{% include "point_system.html" %}
-</form>
-{% endfor %}
-
-<h1 class="text-bg-warning p-1 rounded-pill">630{{ dashboard.fifth_class }}</h1>
-{% for member in fifth_class_members %}
-<a href="{% url 'members:detail' member.id %}">{{ member.name }} {{ member.total_points }}</a>
-<form action="{% url 'lottery:create_point' member.id %}" method="post">
-{% csrf_token %}
-{% include "point_system.html" %}
-</form>
-{% endfor %}
-
-</div>
+    </div>
 </body>
 </html>

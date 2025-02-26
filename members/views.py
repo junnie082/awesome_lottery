@@ -15,22 +15,35 @@ def index(request):
     }
     return render(request, "index.html", context)
 
-def create_member(request):
+def get_create_member_form(request, class_time, class_level):
+    if request.method == "GET":
+        context = {
+            'class_time': class_time,
+            'class_level': class_level,
+        }
+        return render(request, "create_member_form.html", context)
+
+
+def create_member(request, class_time, class_level):
     # POST라면 입력한 내용을 form을 이용하여 데이터베이스에 저장
     if request.method == 'POST' or request.method == 'FILES':
         form = MemForm(request.POST, request.FILES)
 
         # 유효성 검사
         if form.is_valid():
+            member = form.save(commit=False)
+            member.mem_time = class_time
+            member.mem_level = class_level
+
             point = request.POST.get('total_points')
 
             if point is None or point == '':
                 point = 0
 
-            point = int(point)
+            point = float(point)
 
-            form.cleaned_data['total_points'] = point
-            member = form.save()
+            member.total_points = point
+            member.save()
 
             if point != 0:
                 obj_point = Point.objects.create(member=member, points=point)
@@ -47,7 +60,7 @@ def create_member(request):
     else:
         form = MemForm()
 
-    return render(request, 'create_member_form.html', {'form': form})
+    return redirect(reverse('members:get_create_member_form', kwargs={'class_time': class_time, 'class_level': class_level}))
 
 
 def detail(request, member_id):
@@ -57,8 +70,6 @@ def detail(request, member_id):
     total_points = sum_points(member_id)
     num_chances = int(total_points / 30)
     remaining_points = total_points % 30
-    print("num_chans", num_chances)
-    print("remaining_points", remaining_points)
 
     context = {
         "num_chances": num_chances,

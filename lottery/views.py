@@ -34,18 +34,17 @@ def create_point(request, member_id):
         if request.POST.get('pt_three'): new_point.points = 3
         if request.POST.get('pt_four'): new_point.points = 4
         if request.POST.get('pt_five'): new_point.points = 5
+        if request.POST.get('pt_six'): new_point.points = 6
+        if request.POST.get('pt_seven'): new_point.points = 7
+        if request.POST.get('pt_eight'): new_point.points = 8
+        if request.POST.get('pt_nine'): new_point.points = 9
         if request.POST.get('pt_ten'): new_point.points = 10
 
-        if request.POST.get('pt_minus_point_five'): new_point.points = -0.5
-        if request.POST.get('pt_minus_one'): new_point.points = -1
-        if request.POST.get('pt_minus_two'): new_point.points = -2
-        if request.POST.get('pt_minus_three'): new_point.points = -3
-        if request.POST.get('pt_minus_four'): new_point.points = -4
         if request.POST.get('pt_minus_five'): new_point.points = -5
         if request.POST.get('pt_minus_ten'): new_point.points = -10
 
         if request.POST.get('addPoints'):
-            new_point.points = 0
+            new_point.points = float(request.POST.get('addPoints'))
             is_dashboard = False
 
         new_point.save()
@@ -58,19 +57,20 @@ def create_point(request, member_id):
         print(member.total_points)
 
         if is_dashboard:
-            return redirect('dashboard:get_dashboard')
+            return redirect(reverse('dashboard:get_dashboard', kwargs={'class_time': member.mem_time, 'class_level': member.mem_level}))
 
     return redirect(reverse('members:detail', kwargs={'member_id': member_id}))
 
 
 def delete_point(request, point_id):
-    point = get_object_or_404(Point, id=point_id)
-    member = point.member
     if request.method == 'POST':
-        point.delete()
+        point = get_object_or_404(Point, id=point_id)
+        member = point.member
+        if request.method == 'POST':
+            point.delete()
 
-    member.total_points = sum_points(member.id)
-    member.save()
-    print('total_points', member.total_points)
+        member.total_points = sum_points(member.id)
+        member.save()
+        print('total_points', member.total_points)
 
     return redirect(reverse('members:detail', kwargs={'member_id': member.id}))

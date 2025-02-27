@@ -43,7 +43,7 @@ def create_member(request, class_time, class_level):
             if point is None or point == '':
                 point = 0
 
-            point = float(point)
+            point = int(point)
 
             member.total_points = point
             member.save()
@@ -57,7 +57,7 @@ def create_member(request, class_time, class_level):
             obj_level = Level.objects.create(member=member, level=level)
             obj_level.save()
 
-            return redirect('lottery:index')
+            return redirect('dashboard:get_dashboard', class_time=class_time, class_level=class_level)
 
     # GET이라면 입력값을 받을 수 있는 html을 가져다 줘야함
     else:
@@ -72,7 +72,6 @@ def detail(request, member_id):
     point_list = Point.objects.order_by('-date').filter(member=member)
     paginator = Paginator(point_list, 10)  # 페이지당 10개씩 보여주기
     page_obj = paginator.get_page(page)
-    context = {'point_list': page_obj}
 
     total_points = sum_points(member_id)
     num_chances = int(total_points / 30)

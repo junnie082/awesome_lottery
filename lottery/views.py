@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from django.core.paginator import Paginator
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, resolve_url
 from django.urls import reverse
 
 from dashboard.models import Dashboard
@@ -88,7 +88,10 @@ def create_point(request, member_id):
         print(member.total_points)
 
         if is_dashboard:
-            return redirect(reverse('dashboard:get_dashboard', kwargs={'class_time': member.mem_time, 'class_level': member.mem_level}))
+            return redirect('{}#member_{}'.format(
+                resolve_url('dashboard:get_dashboard', class_time=member.mem_time, class_level=member.mem_level),
+                member_id
+            ))
 
     return redirect(reverse('members:detail', kwargs={'member_id': member_id}))
 

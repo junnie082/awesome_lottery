@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, resolve_url
 
 from dashboard.models import Dashboard
 from forms import DashboardForm
@@ -33,7 +33,6 @@ def get_dashboard(request, class_time, class_level):
             'class_level': class_level,
             'class_members': class_members,
         }
-
         return render(request, "dashboard.html", context)
 
     return redirect('lottery:index')

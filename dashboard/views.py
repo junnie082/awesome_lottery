@@ -25,6 +25,20 @@ def get_dashboard(request, class_time, class_level):
     dashboard = Dashboard.objects.reverse().first()
     class_members = Member.objects.filter(mem_time=class_time, mem_level=class_level)
 
+    for member in class_members:
+        total_points = member.total_points
+        stamps = int(total_points / 5)
+        chances = int(stamps / 30)
+        remaining_stamps = stamps - chances * 30
+
+        member.total_points = total_points
+        member.stamps = stamps
+        member.chances = chances
+        member.remaining_stamps = remaining_stamps
+
+        member.save()
+
+
     if request.method == 'GET':
 
         context = {

@@ -8,6 +8,9 @@ class Member(models.Model):
     mem_time = models.CharField(max_length=100, choices=time_Choices, blank=True, null=True)
     mem_level = models.CharField(max_length=100, choices=level_Choices, blank=True, null=True)
     total_points = models.IntegerField(default=0, blank=True, null=True)
+    chances = models.IntegerField(default=0, blank=True, null=True)
+    stamps = models.IntegerField(default=0, blank=True, null=True)
+    remaining_stamps = models.IntegerField(default=0, blank=True, null=True)
 
     def __str__(self):
         return self.name

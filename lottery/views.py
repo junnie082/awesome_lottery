@@ -13,9 +13,14 @@ from members.models import Member
 def index(request):
     page = request.GET.get('page', 1)
     member_list = Member.objects.order_by("-name")
+
+    for member in member_list:
+        member.total_points = int(member.total_points)
+
     paginator = Paginator(member_list, 5)
     page_obj = paginator.get_page(page)
     dashboard = Dashboard.objects.reverse().first()
+
 
     context = {
         "member_list": page_obj,
@@ -59,7 +64,6 @@ def create_point(request, member_id):
 
         is_dashboard = True
 
-        if request.POST.get('pt_point_five'): new_point.points = 0.5
         if request.POST.get('pt_one'): new_point.points = 1
         if request.POST.get('pt_two'): new_point.points = 2
         if request.POST.get('pt_three'): new_point.points = 3

@@ -73,13 +73,23 @@ def detail(request, member_id):
     paginator = Paginator(point_list, 10)  # 페이지당 10개씩 보여주기
     page_obj = paginator.get_page(page)
 
-    total_points = sum_points(member_id)
-    num_chances = int(total_points / 30)
-    remaining_points = total_points % 30
+    total_points = int(sum_points(member_id))
+    stamps = int(total_points / 5)
+    chances = int(stamps / 30)
+    remaining_stamps = stamps - chances * 30
+
+    member.total_points = total_points
+    member.stamps = stamps
+    member.chances = chances
+    member.remaining_stamps = remaining_stamps
+
+    member.save()
 
     context = {
-        "num_chances": num_chances,
-        "remaining_points": remaining_points,
+        "total_points": total_points,
+        "stamps": stamps,
+        "chances": chances,
+        "remaining_stamps": remaining_stamps,
         "member": member,
         "point_list": page_obj
     }

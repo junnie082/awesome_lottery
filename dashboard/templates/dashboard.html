@@ -23,7 +23,7 @@
             {% include "point_system.html" %}
         </form>
         {% for member in class_members %}
-        <a id="member_{{ member.id }}" style="font-weight: bold; font-size: 40px;" href="{% url 'members:detail' member.id %}">{{ member.name }} {{ member.total_points }}</a>
+            <a id="member_{{ member.id }}" style="text-decoration: none; font-weight: bold; font-size: 40px;" href="{% url 'members:detail' member.id %}">{{ member.name }} <span style="font-size: 20px;"> {{ member.total_points }} points / {{ member.stamps }} stamps / {{ member.chances }} chances</span> </a>
         <form action="{% url 'lottery:create_point' member.id %}" method="post">
             {% csrf_token %}
             {% include "point_system.html" %}

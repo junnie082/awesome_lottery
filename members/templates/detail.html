@@ -16,21 +16,27 @@
     <a href="{% url 'lottery:index' %}" class="btn-close" aria-label="Close"></a>
 
     <div class="border border-dark border-2 p-2 round rounded-2">
-        <h1 class="text text-bg-dark">Member: {{ member.name }} ({{ member.mem_time }}{{ member.mem_level }})</h1>
+        <h1 class="text text-bg-dark">Student: {{ member.name }} ({{ member.mem_time }}{{ member.mem_level }})</h1>
 
         <div>
             <h2>TOTAL POINTS: </h2>
-            <h2 class="text text-danger">{{ member.total_points }}</h2>
+            <h2 class="text text-danger">{{ total_points }}</h2>
+        </div>
+
+        <div>
+            <h3>Stamps </h3>
+            <h4 class="text text-danger">{{ stamps }}</h4>
+
         </div>
 
         <div>
             <h3>Chances </h3>
-            <h4 class="text text-danger">{{ num_chances }}</h4>
+            <h4 class="text text-danger">{{ chances }}</h4>
         </div>
 
         <div>
-            <h3>Remaining Points </h3>
-            <h4 class="text text-danger">{{ remaining_points }}</h4>
+            <h6>Remaining Points </h6>
+            <h6 class="text text-danger">{{ remaining_points }}</h6>
         </div>
     </div>
 
@@ -69,7 +75,7 @@
         </li>
         {% else %}
         <li class="page-item disabled">
-            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">Next</a>
+            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">Pre</a>
         </li>
         {% endif %}
         <!-- 페이지리스트 -->
@@ -90,11 +96,11 @@
         <!-- 다음페이지 -->
         {% if point_list.has_next %}
         <li class="page-item">
-            <a class="page-link" href="?page={{ point_list.next_page_number }}">다음</a>
+            <a class="page-link" href="?page={{ point_list.next_page_number }}">Next</a>
         </li>
         {% else %}
         <li class="page-item disabled">
-            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">Next</a>
         </li>
         {% endif %}
     </ul>

@@ -141,3 +141,4 @@ def delete_point(request, point_id):
 
         member.total_points = member.total_points - point.points
         member.save()
+        return redirect(reverse('members:detail', kwargs={'member_id': member.id}))

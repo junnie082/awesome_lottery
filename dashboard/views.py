@@ -11,7 +11,7 @@ def create_dashboard(request):
 
         if form.is_valid():
             dashboard = form.save()
-            return render(request, 'dashboard.html', {'dashboard': dashboard})
+            return redirect('lottery:index')
 
     # GET이라면 입력값을 받을 수 있는 html을 가져다 줘야함
     else:
@@ -25,6 +25,7 @@ def get_dashboard(request, class_time, class_level):
     dashboard = Dashboard.objects.reverse().first()
     class_members = Member.objects.filter(mem_time=class_time, mem_level=class_level)
 
+    print('class_level', class_level, 'class_time', class_time)
     for member in class_members:
         total_points = member.total_points
         stamps = int(total_points / 5)

@@ -4,6 +4,7 @@ from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 
+from dashboard.models import Dashboard
 from forms import MemForm
 from lottery.functions.sum_points import sum_points
 from lottery.models import Point
@@ -89,13 +90,16 @@ def detail(request, member_id):
 
     member.save()
 
+    dashboard = Dashboard.objects.reverse().first()
+
     context = {
         "total_points": total_points,
         "stamps": stamps,
         "chances": chances,
         "remaining_stamps": remaining_stamps,
         "member": member,
-        "point_list": page_obj
+        "point_list": page_obj,
+        "dashboard": dashboard,
     }
 
     return render(request, "detail.html", context)
@@ -104,7 +108,10 @@ def delete_member(request, member_id):
 
     if request.method == 'POST':
         member = get_object_or_404(Member, pk=member_id)
+        class_time = member.mem_time
+        class_level = member.mem_level
+
         member.delete()
 
-    return redirect(reverse('members:index'))
+        return redirect('dashboard:get_dashboard', class_time=class_time, class_level=class_level)
 

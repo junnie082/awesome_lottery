@@ -35,10 +35,29 @@
         </div>
 
         <div>
-            <h6>Remaining Points </h6>
             <h6 class="text text-danger">{{ remaining_points }}</h6>
         </div>
+
     </div>
+
+    <div class="border border-success bg-success border-3 rounded p-2">
+        <h2 style="color: white;">LOTTOS</h2>
+        <div>
+            <a style="background: white; color: deeppink; font-weight: bold;" class="btn btn-lg btn-bg-light" href="{% url 'lottery:start_lottery' member.id %}">START LOTTERY</a>
+        </div>
+        <div style="display: flex; justify-content: start">
+            {% for lotto in member.lottos %}
+                <h3 style="font-size: 80px;" class="text text-light m-2">
+                    {{ lotto }}
+                    <a style="font-weight: bold; padding: 5px 10px;" class="w-10 h-5 btn btn-sm btn-warning" type="submit" href="{% url 'lottery:use_lotto' member_id=member.id  index=forloop.counter0 %}">
+                        USE
+                    </a>
+                </h3>
+            {% endfor %}
+        </div>
+
+    </div>
+
 
       <div class="border border-warning border-2 rounded p-2">
         <form action="{% url 'lottery:create_point' member.id %}" method="post">

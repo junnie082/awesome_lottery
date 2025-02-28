@@ -1,8 +1,10 @@
 from datetime import datetime
+import json
 
 from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404, redirect, resolve_url
 from django.urls import reverse
+from django.views.decorators.csrf import csrf_exempt
 
 from dashboard.models import Dashboard
 from lottery.functions.sum_points import sum_points
@@ -21,12 +23,47 @@ def index(request):
     page_obj = paginator.get_page(page)
     dashboard = Dashboard.objects.reverse().first()
 
-
     context = {
         "member_list": page_obj,
         "dashboard": dashboard,
     }
     return render(request, "index.html", context)
+
+def use_lotto(request, member_id, index):
+    member = get_object_or_404(Member, pk=member_id)
+    if len(member.lottos) == 1:
+        lotto = ''
+    else:
+        lotto = member.lottos[:index] + member.lottos[index+1:]
+    print('index ', index)
+    print("popped lotto", lotto)
+    member.lottos = lotto
+    member.save()
+    return redirect(reverse('members:detail', kwargs={'member_id': member_id}))
+
+# Global counter (resets when the server restarts)
+lotto = 1
+
+def start_lottery(request, member_id):
+    if request.method == "GET":
+        member = get_object_or_404(Member, id=member_id)
+        global lotto
+        lotto = 1 if lotto == 5 else lotto + 1  # If i is 5, reset to 1, else increment
+        # return JsonResponse({"i": i})
+        context = {'lotto': lotto, 'member': member}
+        return render(request, 'lottery.html', context)
+
+def stop_lottery(request, member_id, lotto):
+    member = Member.objects.get(pk=member_id)
+    member.lottos = str(member.lottos) + str(lotto)
+    member.total_points = member.total_points - 5 * 30
+    member.chances = member.chances - 1
+    member.stamps = member.stamps - 30
+    member.save()
+
+    print('member.lottos ', member.lottos)
+
+    return render(request, 'lottery_result.html', {'lotto': lotto, 'member': member})
 
 def entire_mem_point(request, class_time, class_level):
     if request.method == "POST":
@@ -54,7 +91,6 @@ def entire_mem_point(request, class_time, class_level):
             member.save()
 
         return redirect(reverse('dashboard:get_dashboard', kwargs={'class_time': class_time, 'class_level': class_level}))
-
 
 def create_point(request, member_id):
     if request.method == 'POST':
@@ -84,12 +120,9 @@ def create_point(request, member_id):
 
         new_point.save()
 
-        member.total_points = sum_points(member_id)
+        member.total_points = member.total_points + new_point.points
         member.save()
 
-
-        print('new_point.points: ', new_point.points)
-        print(member.total_points)
 
         if is_dashboard:
             return redirect('{}#member_{}'.format(
@@ -104,11 +137,7 @@ def delete_point(request, point_id):
     if request.method == 'POST':
         point = get_object_or_404(Point, id=point_id)
         member = point.member
-        if request.method == 'POST':
-            point.delete()
+        point.delete()
 
-        member.total_points = sum_points(member.id)
+        member.total_points = member.total_points - point.points
         member.save()
-        print('total_points', member.total_points)
-
-    return redirect(reverse('members:detail', kwargs={'member_id': member.id}))

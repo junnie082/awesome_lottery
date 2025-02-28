@@ -1,0 +1,21 @@
+<!doctype html>
+{% load static %}
+{% load lottery_filter %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Awesome Lottery - For Alex</title>
+      <link rel="stylesheet" href="../../static/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  </head>
+  <body style="display: flex; justify-content: center">
+  <div>
+      <a style="text-align: center;" href="{% url 'members:detail' member.id %}" class="btn-close" aria-label="Close"></a>
+
+    <div style="font-size: 400px; text-align: center">{{ lotto }}</div>
+
+  <a style="text-align: center; font-size: 50px;" class="btn btn-success btn-lg" href="{% url 'members:detail' member.id %}">See the result</a>
+  </div>
+  </body>
+</html>

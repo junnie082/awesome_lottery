@@ -37,6 +37,7 @@ def create_member(request, class_time, class_level):
             member = form.save(commit=False)
             member.mem_time = class_time
             member.mem_level = class_level
+            member.lottos = ''
 
             point = request.POST.get('total_points')
 
@@ -70,15 +71,18 @@ def detail(request, member_id):
     member = get_object_or_404(Member, pk=member_id)
     page = request.GET.get('page', '1')  # 페이지
     point_list = Point.objects.order_by('-date').filter(member=member)
+
+    for point in point_list:
+        point.points = int(point.points)
+
     paginator = Paginator(point_list, 10)  # 페이지당 10개씩 보여주기
     page_obj = paginator.get_page(page)
 
-    total_points = int(sum_points(member_id))
+    total_points = member.total_points
     stamps = int(total_points / 5)
     chances = int(stamps / 30)
     remaining_stamps = stamps - chances * 30
 
-    member.total_points = total_points
     member.stamps = stamps
     member.chances = chances
     member.remaining_stamps = remaining_stamps
@@ -95,7 +99,6 @@ def detail(request, member_id):
     }
 
     return render(request, "detail.html", context)
-
 
 def delete_member(request, member_id):
 

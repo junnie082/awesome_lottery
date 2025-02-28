@@ -11,6 +11,7 @@ class Member(models.Model):
     chances = models.IntegerField(default=0, blank=True, null=True)
     stamps = models.IntegerField(default=0, blank=True, null=True)
     remaining_stamps = models.IntegerField(default=0, blank=True, null=True)
+    lottos = models.CharField(default='', max_length=100, blank=True, null=True)
 
     def __str__(self):
         return self.name

@@ -42,6 +42,22 @@
 
     <div class="border border-success bg-success border-3 rounded p-2">
         <h2 style="color: white;">LOTTOS</h2>
+    <p style="color:white;">
+        {% if member.mem_level == "A" %}
+            1: Candy<br>
+            2: 10 min game<br>
+            3: 5 min game<br>
+            4 : Again<br>
+            5 : High Five<br>
+            {% else %}
+            1: Test Pass<br>
+            2: HW Pass<br>
+            3: HW -5<br>
+            4: HW -3<br>
+            5 : High-Five
+        {% endif %}
+    </p>
+
         <div>
             <a style="background: white; color: deeppink; font-weight: bold;" class="btn btn-lg btn-bg-light" href="{% url 'lottery:start_lottery' member.id %}">START LOTTERY</a>
         </div>

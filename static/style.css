@@ -1,0 +1,21 @@
+
+h1, div {
+    justify-content: center;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+}
+
+a {
+    font-size: 25px;
+    text-decoration: none;
+}
+
+.dashboard_level {
+    color: black;
+    background-color: orange;
+}
+
+

@@ -57,10 +57,10 @@ Please checkout the lottery system.
 
 
 ### Develop Info
-Tools:
+#### Tools    
 Python Django  
 AWS ec2  
 Github Actions  
 
-Developer:
+#### Developer  
 Hyojeong Jun

@@ -58,9 +58,9 @@ Please checkout the lottery system.
 
 ### Develop Info
 Tools:
-Python Django
-AWS ec2
-Github Actions
+Python Django  
+AWS ec2  
+Github Actions  
 
 Developer:
 Hyojeong Jun
